@@ -14,6 +14,7 @@ import Result from './Result'
 import {MDCDialog} from '@material/dialog';
 import {$,jQuery} from 'jquery';
 import 'node-fetch';
+import { AlarmRounded } from '@material-ui/icons';
 
 
 
@@ -24,30 +25,25 @@ class Navbar extends React.Component{
     super(props);
     this.state = {
       inputValue: '', 
+      openResult:false, 
     };
     this.props = props; 
     this.handleChange = this.handleChange.bind(this); 
     this.request = this.request.bind(this); 
-
   }
 
   handleChange(e) {
     this.setState({ inputValue: e.target.value});
-    // alert(this.state.inputValue); 
+    
   }
-  
-
+ 
   componentDidMount(){
     var search = "tseting"; 
     var sites = "sits"; 
     var amount = "20";
-    const url = `http://192.168.111.128:3000/search/all?search=${search}&sites=${sites}&amount=${amount}`;  
-    const fetch = require('node-fetch'); 
-    
-    fetch(url,{
-      credentials: 'same-origin'
-    }).then(res => res.text())
-        .then(data => console.log(data))
+  
+  
+
   }
 
   request(){
@@ -67,22 +63,32 @@ class Navbar extends React.Component{
     
 
   handleLoginClick(){
-    const d = new MDCDialog(document.querySelector('#loginDialog'));  
+    
+    const d = new MDCDialog(document.querySelector('#loginDialog')); 
     d.open();  
+    
     
   }
 
   handleRegisterClick(){
     const d = new MDCDialog(document.querySelector('#registerDialog'));
     d.open();
+    
   }
+  renderResult(e){
+    if(window.location.href.toString().includes("search")){ //FIX THISSSS AHAHAHAHAHHAAH
+      return <Result></Result>
+    }
+    else{
+      return null; 
+    } 
+  }; 
 
 
 
     render(){
         return (
         
-            <Router>
             <div>
               <Login></Login>
               <Register></Register>
@@ -92,9 +98,9 @@ class Navbar extends React.Component{
               
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"style ={{width:"150%"}}>
-                <form class="d-flex" style ={{width:"100%"}}  method = "GET" action = "search" onSubmit={this.request}>
-                    <input class="form-control me-2" type="search" placeholder="Search" id="Search" style={{backgroundColor:'black', borderColor:"grey", color:'white'}} onChange = {this.handleChange} name = "q"></input>
-                    <button class="btn btn-outline-success" type="submit" style={{color:'white', border:"none"}} >Search</button>
+                <form class="d-flex" style ={{width:"100%"}}  method = "GET" action = "search">
+                    <input class="form-control me-2" type="search" placeholder="Search" id="Search" style={{backgroundColor:'black', borderColor:"grey", color:'white'}} onChange = {this.handleChange} name = "q" ></input>
+                    <button class="btn btn-outline-success" type="submit" style={{color:'white', border:"none"}}> Search</button>
                 </form>
       
                 
@@ -104,13 +110,10 @@ class Navbar extends React.Component{
               </div>
             </div>
           </nav>
+          {this.renderResult()}
+          
+          
             </div>
-
-            <Switch>
-                <Route path = "/search" component = {() => <Result searchItem = {this.state.inputValue}/>}/>
-              </Switch>
-            </Router>  
-
         ); 
     }
 }
