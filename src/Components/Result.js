@@ -21,7 +21,6 @@ class Result extends React.Component{
           imagesData: [],
           tagList: [], 
           slectedTab: 0, 
-          t : ''
         }; 
     }
 
@@ -37,7 +36,6 @@ class Result extends React.Component{
       const fetch =require('node-fetch');
       fetch(url).then(res => res.json()).then(data => JSON.parse(JSON.stringify(data))["tags"]).then(d => this.setState({tagList:d}));
     }
-
     
     getImageData(search, siteCode, amount){
           //sitesCide = site code from sitseList JSON  
@@ -50,21 +48,31 @@ class Result extends React.Component{
     }
 
 
-    componentDidUpdate(){ //reinitaite material design compoentn
-        try {
-        const chipSetEl = document.querySelector('.mdc-chip-set');
-        const chipSet = new MDCChipSet(chipSetEl);
+    componentDidUpdate(){ //reinitaite material design compoentn //TODO: OPTIMIZE PERFORMANCE
+        try { 
+        const chipSet = new MDCChipSet(document.querySelector('.mdc-chip-set'));
+        chipSet.listen('MDCChip:selection', function(event){
+          console.log(event.detail.chipId); 
+        }); 
         }catch(e) {
           console.log(e);
         }
         try {
           const tabBar = new MDCTabBar(document.querySelector('.mdc-tab-bar'));
+          var tabs  = document.querySelectorAll('.mdc-tab');
+          tabBar.listen('MDCTabBar:activated', function(event) {
+            let tab = tabs[event.detail.index];
+            this.setState({slectedTab:event.detail.index});
+          }.bind(this));
+
+          
         }catch(e){
           console.log(e)
         }
 
     }
 
+    
     componentDidMount(){
         this.getSitesList(); 
         this.getImageData(this.props.searchItem, "0", 20); 
@@ -132,14 +140,15 @@ class Result extends React.Component{
 
     craeteChipsSet(chipList){
       var jsx =[]
-      if (chipList.length ==0) {
+      if (chipList.length ==0) { //if ajax return null 
         return null;
       } 
-      else 
+      else // if data is received
       { let i ; 
         for(i = 0; i <= chipList.length -1; i++){
           jsx.push(this.createChips(chipList[i], false)); 
         }
+
         // return jsx; 
         return(
           <div class="mdc-chip-set mdc-chip-set--filter" role="grid">
@@ -170,16 +179,18 @@ class Result extends React.Component{
       }
     }
 
+    createTabView(){
+      var d = this.state.sitesList[this.state.slectedTab]; 
+      return d;  
 
-     
+    }
 
     render(){
         return( 
 
             <div>
-           
-            {this.parseImageData(1)}
             {this.craeteChipsSet(this.state.tagList)}
+            {this.createTabView()}
             <div className = "mdc-tab-bar" role = "tablist">
                 <div className = "mdc-tab-scroller" >
                     <div className = "mdc-tab-scroller__scroll-area">
@@ -192,7 +203,6 @@ class Result extends React.Component{
                     </div>
                 </div>
             </div>  
-
             <div >
         
 
