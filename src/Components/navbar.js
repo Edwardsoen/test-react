@@ -7,6 +7,7 @@ import Result from './Result'
 import {MDCDialog} from '@material/dialog';
 import 'node-fetch';
 import Home from './Home';
+import { ThreeDRotation } from '@material-ui/icons';
 
 
 
@@ -17,43 +18,40 @@ class Navbar extends React.Component{
     super(props);
     this.state = {
       inputValue: '', 
-      openResult:false, 
+      openResult:false,
+      loginStatus:"false", //TODO: convert to boolean ><<<
+      username:'' 
     };
     this.props = props; 
     this.handleChange = this.handleChange.bind(this); 
+    this.handleLoginStatus = this.handleLoginStatus.bind(this); 
+    this.handleUsername = this.handleUsername.bind(this); 
   }
+
+
+
 
   handleChange(e) {
     this.setState({ inputValue: e.target.value});
-    
   }
  
   componentDidMount(){
-    var search = "tseting"; 
-    var sites = "sits"; 
-    var amount = "20";
-  
-  
-
   }
 
     
 
   handleLoginClick(){
-    
-    const d = new MDCDialog(document.querySelector('#loginDialog')); 
-    d.open();  
-    
-    
-  }
+    let d = new MDCDialog(document.querySelector('#loginDialog')); 
+    d.open();      
+  };
 
   handleRegisterClick(){
-    const d = new MDCDialog(document.querySelector('#registerDialog'));
+    let d = new MDCDialog(document.querySelector('#registerDialog'));
     d.open();
-    
   }
+
   renderResult(e){
-    if(window.location.href.toString().includes("search")){ //FIX THISSSS AHAHAHAHAHHAAH 
+    if(window.location.href.toString().includes("search")){ //FIX THISSSS rtyytrhsdh53426hbhe5trgdf 
       return <Result></Result>
     }
     else{
@@ -61,14 +59,48 @@ class Navbar extends React.Component{
     } 
   }; 
 
+  handleLoginStatus(e){
+    this.setState({LoginStatus:e})
+    console.log(e)
+  
+    if(e == "true"){
+      let d = new MDCDialog(document.querySelector('#loginDialog')); 
+      console.log(d.isOpen); //fix this
+      d.open();
+      d.close();
+    }
+
+ 
+    
+  };
+  
+  handleUsername(e){
+    this.setState({username:e})
+  }; 
+
+  checkLoggedIn(){//TODO: Convert to boolean //Paramter if Logged in
+    var s = {}
+    if(this.state.LoginStatus == "false"){
+      s["left"] = "Login"; 
+      s["right"] = "Register";  
+      s["button"] = "btn btn-outline-dark"; 
+    }
+    else { 
+      s["left"] = this.state.username; 
+      s["right"] = "Menu"; 
+      s["button"] = "btn btn-outline-dark disabled"; 
+    }
+    return s;
+  }
+
+  
+
+
 
 
     render(){
         return (
-        
             <div>
-              <Login></Login>
-              <Register></Register>
             <nav className="navbar navbar-expand-lg navbar-dark" style ={{position:"relative", backgroundColor: "black"}} aria-hidden = "true" >
             <div className="container-fluid"  > 
               <a className="navbar-brand" href="/">Home</a>
@@ -79,17 +111,21 @@ class Navbar extends React.Component{
                     <input className="form-control me-2" type="search" placeholder="Search" id="Search" style={{backgroundColor:'black', borderColor:"grey", color:'white'}} onChange = {this.handleChange} name = "q" ></input>
                     <button className="btn btn-outline-success" type="submit" style={{color:'white', border:"none"}}> Search</button>
                 </form>
-      
-                
                 </ul>
-                <a className="btn btn-outline-dark" style={{color:'white',border:'none' }} onClick = {this.handleLoginClick}>Login</a>
-                <a className="btn btn-outline-dark"  style={{color:'white',border:'none'}} onClick = {this.handleRegisterClick}>Register</a>
-              </div>
+                <Login loginStatus = {this.handleLoginStatus} username = {this.handleUsername}></Login>
+                 <Register></Register>  
+              
+                <a className={this.checkLoggedIn()["button"]} style={{color:'white',border:'none' }} onClick = {this.handleLoginClick} >{this.checkLoggedIn()["left"]}</a>
+                <a className="btn btn-outline-dark"  style={{color:'white',border:'none'}} onClick = {this.handleRegisterClick}>{this.checkLoggedIn()["right"]}</a>
+     
+
+
+                </div>
             </div>
           </nav>
           {this.renderResult()}
           
-          
+    
             </div>
         ); 
     }

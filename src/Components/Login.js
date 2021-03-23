@@ -9,14 +9,22 @@ class Login extends React.Component{
       this.state = {
         username:"", 
         password: "", 
-        isChecked: false
+        isChecked: false, 
+        isLoggedIn: false, 
+        isRegistered: "",
       }; 
       this.props = props; 
       this.handlePasswordChange = this.handlePasswordChange.bind(this); 
       this.handleUsernameChange = this.handleUsernameChange.bind(this); 
       this.handleCheckbox = this.handleCheckbox.bind(this); 
-      this.loginUser = this.loginUser.bind(this); 
+      this.loginUser = this.loginUser.bind(this);
+      this.parseResponse = this.parseResponse.bind(this); 
     }; 
+
+
+
+
+
     handleCheckbox(e){ 
       this.setState({isChecked:e.target.value}); 
     };
@@ -28,6 +36,17 @@ class Login extends React.Component{
       this.setState({password: e.target.value}); 
     };  
     
+    parseResponse(data){
+      data = JSON.parse(JSON.stringify(data)); 
+      this.setState({isLoggedIn: data["isLoggedIn"]}); 
+      this.setState({isRegistered:data["isRegistered"]}); 
+      this.props.loginStatus(this.state.isLoggedIn); 
+      this.props.username(this.state.username); 
+    }
+
+
+
+
     loginUser(){
       const link = "http://192.168.111.128:3000"; 
       const url = `${link}/api/login`;
@@ -41,7 +60,7 @@ class Login extends React.Component{
           },
           body: JSON.stringify(data)
       }, 
-      )
+      ).then( data => data.json()).then(d => this.parseResponse(d)); 
     };
     
   
@@ -72,7 +91,7 @@ class Login extends React.Component{
                     <input type = "checkbox" onChange = {this.handleCheckbox}></input> 
                     <label htmlFor = "rememberMe" style = {{margin:'3px'}}> Remember me </label>
                     <hr style = {{borderStyle: "none"}}></hr>
-                     <input type = "commit" defaultValue = "Login" className = "btn btn-primary" style = {{width : "100%"}} onClick = {this.loginUser} ></input>
+                     <input type = "commit"  defaultValue = "Login" className = "btn btn-primary" style = {{width : "100%"}} onClick = {this.loginUser} ></input>
                 </div>
             </form>
                   </div>
