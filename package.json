@@ -13,6 +13,7 @@
     "bootstrap": "^4.6.0",
     "form-data": "^4.0.0",
     "jquery": "^3.5.1",
+    "js-cookie": "^2.2.1",
     "material-components-web": "^10.0.0",
     "node-fetch": "^2.6.1",
     "node-sass": "^5.0.0",

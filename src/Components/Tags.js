@@ -61,7 +61,9 @@ class Tags extends React.Component{
       const link = "http://localhost:8000/"; 
         const url = `${link}api/tags`;
         const fetch =require('node-fetch');
-        fetch(url).then(res => res.json()).then(data => JSON.parse(JSON.stringify(data))["tags"]).then(d => this.setState({tagList:d}));
+        fetch(url, { 
+          credentials: 'include' //change this
+        }).then(res => res.json()).then(data => JSON.parse(JSON.stringify(data))["tags"]).then(d => this.setState({tagList:d}));
       }
       
 

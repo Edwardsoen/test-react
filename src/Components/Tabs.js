@@ -28,11 +28,10 @@ class Tabs extends React.Component{
         };
 
     componentDidUpdate(){
-        if(this.state.isInitialized == false && document.getElementsByClassName('.mdc-tab-bar') != null ){
+        if(this.state.isInitialized == false && document.querySelectorAll('.mdc-tab').length > 0 ){
             try {
                 let tabBar = new MDCTabBar(document.querySelector('.mdc-tab-bar'));
                 let tabs  = document.querySelectorAll('.mdc-tab');
-                alert("is initialized")
                 tabBar.listen('MDCTabBar:activated', function(event) {
                     let tab = tabs[event.detail.index];
                     this.setState({slectedTab:event.detail.index});

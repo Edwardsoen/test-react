@@ -24,7 +24,9 @@ class Register extends React.Component{
         const url = `${link}api/register`;
         const fetch = require('node-fetch'); 
         var data = {username : this.state.username, password: this.state.password, email: this.state.email}; 
-        fetch(url, {
+        fetch(url, 
+            {
+            credentials: 'include',
             method: "POST", 
             headers: {
                 'Content-Type': 'application/json',

@@ -6,7 +6,6 @@ import Register from './Register';
 import Result from './Result'
 import {MDCDialog} from '@material/dialog';
 import {MDCMenu} from '@material/menu'
-import 'node-fetch';
 import Home from './Home';
 import Menu from './Menu';
 import { ThreeDRotation } from '@material-ui/icons';
@@ -19,13 +18,15 @@ class Navbar extends React.Component{
       inputValue: '', 
       openResult:false,
       loginStatus:"false", //TODO: convert to boolean ><<<
-      username:'' 
+      username:'', 
+      registerIsClicked: false
     };
     this.props = props; 
     this.handleChange = this.handleChange.bind(this); 
     this.handleLoginStatus = this.handleLoginStatus.bind(this); 
     this.handleUsername = this.handleUsername.bind(this); 
     this.handleRegisterClick = this.handleRegisterClick.bind(this); 
+    this.handleLogout = this.handleLogout.bind(this); 
   }
 
 
@@ -53,7 +54,7 @@ class Navbar extends React.Component{
     }else {
       console.log("false")
       let d = new MDCDialog(document.querySelector('#registerDialog'));
-    d.open();
+      d.open();
     }
   }
 
@@ -96,8 +97,9 @@ class Navbar extends React.Component{
     return s;
   }
 
-  
-
+  handleLogout(e){
+    this.setState({loginStatus :  "false"}); 
+  }; 
 
 
 
@@ -118,12 +120,12 @@ class Navbar extends React.Component{
                 </form>
                 </ul>
                 <Login loginStatus = {this.handleLoginStatus} username = {this.handleUsername}></Login>
-                 <Register></Register>  
+                <Register></Register>
               
                 <a className={this.checkLoggedIn()["button"]} style={{color:'white',border:'none' }} onClick = {this.handleLoginClick} >{this.checkLoggedIn()["left"]}</a>
                 <a className="btn btn-outline-dark"  style={{color:'white',border:'none'}} onClick = {this.handleRegisterClick}>{this.checkLoggedIn()["right"]}
                 <div class = "toolbar mdc-menu-surface--anchor">
-                <Menu></Menu>
+                <Menu isLoggedOut = {this.handleLogout}></Menu>
                 </div>
                 </a>
                 </div>

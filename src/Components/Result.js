@@ -7,6 +7,8 @@ import Tabs from './Tabs';
 import '../style/index.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import '../style/test.scss';
+import Cookies from 'js-cookie';
+
 
 
 class Result extends React.Component{
@@ -20,7 +22,7 @@ class Result extends React.Component{
           currentPage:1,  //number of images requested....  will reset onTabChange //artstation max == 50, dev == 
           tagStatus:{}, 
           isOnHomePage: false, 
-          searchItem:"landscape"
+          searchItem:"landscape", 
          }; 
         this.handleTabChange = this.handleTabChange.bind(this); 
         this.appendSitesList = this.appendSitesList.bind(this); 
@@ -30,8 +32,14 @@ class Result extends React.Component{
         this.renderTagsAndTabs = this.renderTagsAndTabs.bind(this); 
       }
 
+      generateSession(){
+        var link =  "http://localhost:8000/api/sesion";
+        fetch(link, {
+          credentials: 'include'
+        });  
+      }
 
-    
+
     getImageData(search, siteCode, page){
           //sitesCide = site code from sitseList sitesList data [0] == all
       // const link = "http://192.168.43.176:3000/"; 
@@ -55,8 +63,8 @@ class Result extends React.Component{
     };
 
     componentDidMount(){
+      this.generateSession(); 
       var searchItem = new URLSearchParams(window.location.search).get("q"); 
-
       if(searchItem == null){
         this.setState({isOnHomePage:true})
         // this.setState({searchItem:"landscape"})

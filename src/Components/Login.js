@@ -22,9 +22,6 @@ class Login extends React.Component{
     }; 
 
 
-
-
-
     handleCheckbox(e){ 
       this.setState({isChecked:e.target.value}); 
     };
@@ -40,11 +37,14 @@ class Login extends React.Component{
       data = JSON.parse(JSON.stringify(data)); 
       this.setState({isLoggedIn: data["isLoggedIn"]}); 
       this.setState({isRegistered:data["isRegistered"]}); 
+      if("username" in data) { //if logged in via cookieeeee
+        this.props.username(data["username"]);
+
+      }else { 
+        this.props.username(this.state.username);
+      }
       this.props.loginStatus(this.state.isLoggedIn); 
-      this.props.username(this.state.username); 
     }
-
-
 
 
     loginUser(){
@@ -58,6 +58,7 @@ class Login extends React.Component{
               'Content-Type': 'application/json',
               "Accept": "application/json"
           },
+          credentials: 'include', 
           body: JSON.stringify(data)
       }, 
       ).then( data => data.json()).then(d => this.parseResponse(d)); 
@@ -66,16 +67,20 @@ class Login extends React.Component{
   
     componentDidMount(){
         // this.loginUser(); 
+        this.loginUser(); 
         const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
     };
 
+    handleForgotPassword(){
+      alert("too badddd ")
+    }
 
 
 
 
     render(){
         return(
-            <div className = "mdc-dialog" id = "loginDialog">
+            <div className = "mdc-dialog" id = "loginDialog" style = {{position: "fixed"}}>
             <div className = "mdc-dialog__container">
               <div className = "mdc-dialog__surface">  
                 <div className = "mdc-dialog__content">
@@ -97,7 +102,7 @@ class Login extends React.Component{
                   </div>
                 </div>
               <div className = "mdc-dialog__actions">
-              <a href =  "/" name = "forgotPassword" style = {{paddingRight:"50px"}}>Forgot password?</a>
+              <a href = '/' name = "forgotPassword" style = {{paddingRight:"50px"}} onClick = {this.handleForgotPassword}>Forgot password?</a>
                 <button data-mdc-dialog-action = "Cancel" className = "btn btn-outline-seconday"> Cancel </button>  
                 </div> 
               </div>
