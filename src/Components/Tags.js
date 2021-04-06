@@ -28,11 +28,14 @@ class Tags extends React.Component{
           const chipSet = new MDCChipSet(document.querySelector('.mdc-chip-set'));
           var i;
           var chipData = {}; 
+          var chipId = {}
           for(i =0; i<= chipSet.chips.length -1 ; i ++){
              //check if chip is checekd
              var isTrueSet = (chipSet.chips[i]["primaryAction_"]["ariaChecked"] == 'true'); //string to boolean
-            chipData[chipSet.chips[i]["id"]] = isTrueSet;
-            
+            // chipData[chipSet.chips[i]["id"]] = isTrueSet;
+            // chipData[this.state.tagList[i]] = isTrueSet;
+            chipData[i] = isTrueSet;
+            chipId[chipSet.chips[i]["id"]] =  i
           };
           this.setState({tagStatus:chipData}); 
 
@@ -40,8 +43,10 @@ class Tags extends React.Component{
           chipSet.listen('MDCChip:selection', function(event){
             console.log(event.detail);
             let d = this.state.tagStatus;
-            d[[event.detail["chipId"]]] = event.detail["selected"];
+            // d[event.detail["chipId"]] = event.detail["selected"];
+            d[chipId[event.detail["chipId"]]] = event.detail["selected"];
             this.setState({tagStatus:d}); 
+            console.log(event.detail)
             this.props.tagHash(this.state.tagStatus); 
           }.bind(this)); 
 
@@ -54,6 +59,9 @@ class Tags extends React.Component{
       }
       } 
     };
+
+    
+    
 
 
     getTagsList(){
@@ -103,7 +111,7 @@ class Tags extends React.Component{
         else // if data is received
         { let i ; 
           for(i = 0; i <= chipList.length -1; i++){
-            jsx.push(this.createChip(chipList[i], false)); 
+            jsx.push(this.createChip(chipList[i], true)); 
           }
   
           // return jsx; 

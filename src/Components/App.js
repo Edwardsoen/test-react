@@ -61,7 +61,7 @@ class App extends React.Component{
             "Accept": "application/json"
         },
         credentials: 'include', 
-        
+        // body: JSON.stringify({"":""})
     }, 
     ).then( data => data.json()).then(d => this.parseResponse(d)); 
   };

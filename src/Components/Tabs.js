@@ -19,12 +19,11 @@ class Tabs extends React.Component{
     }
 
     getSitesList(){
-        // const link = "http://192.168.43.176:3000/"; 
         const link = "http://localhost:8000/";  
-        const url = `${link}api/sites`;
+        const url = `${link}api/tabs`;
         const fetch =require('node-fetch');
         fetch(url).then(res => res.json()).then(data=> 
-            JSON.parse(JSON.stringify(data))["sites"]).then(sites => this.setState({sitesList:sites})).then(this.updateSitesList); //JSON TO KEYS LIST
+            JSON.parse(JSON.stringify(data))["tabs"]).then(sites => this.setState({sitesList:sites})).then(this.updateSitesList); //JSON TO KEYS LIST
         };
 
     componentDidUpdate(){

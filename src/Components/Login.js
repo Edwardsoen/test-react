@@ -38,7 +38,7 @@ class Login extends React.Component{
     parseResponse(data){
       data = JSON.parse(JSON.stringify(data)); 
       this.setState({isLoggedIn: data["isLoggedIn"]}); 
-      this.setState({isRegistered:data["isRegistered"]}); 
+      // this.setState({isRegistered:data["isRegistered"]}); 
       // this.props.loginStatus(this.state.isLoggedIn); 
       // this.props.username()
       if(data["isLoggedIn"]){ //if loggeed in 

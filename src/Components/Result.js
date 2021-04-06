@@ -8,6 +8,7 @@ import '../style/index.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import '../style/test.scss';
 import Cookies from 'js-cookie';
+import { map } from 'jquery';
 
 
 
@@ -17,10 +18,10 @@ class Result extends React.Component{
         this.props = props; 
         this.state = { 
           siteslist:[], 
-          selectedTab: "all", //default
+          selectedTab: "0", //default
           imagesData: [], 
           currentPage:1,  //number of images requested....  will reset onTabChange //artstation max == 50, dev == 
-          tagStatus:{}, 
+          tagStatus:null, 
           isOnHomePage: false, 
           searchItem:"landscape", 
          }; 
@@ -30,13 +31,7 @@ class Result extends React.Component{
         this.scrollAction = this.scrollAction.bind(this); 
         this.handleTagChange = this.handleTagChange.bind(this); 
         this.renderTagsAndTabs = this.renderTagsAndTabs.bind(this); 
-      }
-
-      generateSession(){
-        var link =  "http://localhost:8000/api/sesion";
-        fetch(link, {
-          credentials: 'include'
-        });  
+        this.getCheckedTagList = this.getCheckedTagList.bind(this); 
       }
 
 
@@ -48,23 +43,28 @@ class Result extends React.Component{
       var signal = this.controller.signal;
       var s = `search=${search}`; 
       
+
+      var taglist = "&tag=" + this.getCheckedTagList();
       if(!tabCode){
         var site = ""; 
       }else {
         var site = `&sort=${tabCode}`;
       }
       var a =  `&page=${page}`; 
-      const url = `${link}search?${s}${site}${a}`;    //${link}/search/all?search=${search}&sites=${tabCode}&page=${page}; 
+      const url = `${link}search?${s}${site}${a}${taglist}`;    //${link}/search/all?search=${search}&sites=${tabCode}&page=${page}; 
       const fetch = require('node-fetch'); 
-      fetch(url, {signal}).then(res => res.json())
-          .then(data => JSON.parse(JSON.stringify(data))["data"])
-          .then(d => this.setState({imagesData:this.state.imagesData.concat(d)}))
-          .catch(error => {console.log(error)}); 
+
+
+      fetch(url, {signal: signal, 
+        credentials: 'include', 
+      }).then(res => res.json())
+        .then(data => JSON.parse(JSON.stringify(data))["data"])
+        .then(d => this.setState({imagesData:this.state.imagesData.concat(d)}))
+        .catch(error => {console.log(error)}); 
     };
 
     
     componentDidMount(){
-      this.generateSession(); 
       var searchItem = new URLSearchParams(window.location.search).get("q"); 
       if(searchItem == null){
         this.setState({isOnHomePage:true})
@@ -77,6 +77,31 @@ class Result extends React.Component{
       
        
     };
+
+    componentDidUpdate(){
+      this.getCheckedTagList()
+    }
+
+
+    
+    getCheckedTagList(){
+      var a = [];
+      var b = this.state.tagStatus
+      try { 
+     Object.keys(b).forEach(function(key){
+       if(b[key]){
+         a.push(key)
+       }
+     })}
+    catch(err){
+      console.log(err)
+    }
+    finally {
+      return a.toString();
+    }
+   }
+
+
 
     
     createTabView(){
@@ -117,6 +142,8 @@ class Result extends React.Component{
     };
 
 
+
+
     scrollAction(){
       this.setState({currentPage:this.state.currentPage + 1});
       this.getImageData(this.state.searchItem,"", this.state.currentPage); 
@@ -125,7 +152,11 @@ class Result extends React.Component{
     }
 
     handleTagChange(e){
+      this.controller.abort(); 
+      this.setState({currentPage:1}); 
+      this.setState({imagesData:[]}); 
       this.setState({tagStatus:e})
+      this.getImageData(this.state.searchItem ,this.state.selectedTab ,this.state.currentPage);
     }
 
     renderTagsAndTabs(){
@@ -135,6 +166,7 @@ class Result extends React.Component{
       else {
         return(   
           <div>
+            
         <Tags tagHash = {this.handleTagChange}></Tags>
         <Tabs isChanged = {this.handleTabChange} siteslist = {this.appendSitesList}></Tabs>   
         </div>

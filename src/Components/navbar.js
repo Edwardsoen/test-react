@@ -52,7 +52,7 @@ class Navbar extends React.Component{
 
   checkLoggedIn(){//TODO: Convert to boolean //Paramter if Logged in
     var s = {}
-    if(this.state.loginStatus == false){
+    if(this.state.loginStatus == false || this.state.loginStatus == "false" ){//FIX THIS 
       s["left"] = "Login"; 
       s["right"] = "Register";  
       s["button"] = "btn btn-outline-dark"; 
