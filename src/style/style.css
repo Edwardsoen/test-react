@@ -1,0 +1,47 @@
+
+.Buttonlist { 
+    height: 80px;
+    width: 150%;
+}
+
+.main { 
+    overflow-y: hidden;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.Buttonlist ul{ 
+    padding: 0px;
+    width: inherit;
+ 
+    height: inherit;
+}
+
+
+li { 
+    display: inline;
+    padding: 10px;
+    height: inherit;
+    width: inherit; 
+}
+
+
+button { 
+    color:white;
+    border: 0px;
+    border-radius: 10px;
+
+
+    height: 80px;
+    width: 120px;
+    padding: 0px;
+    background-image: url(https://image-cdn.essentiallysports.com/wp-content/uploads/20200505183733/Cyberpunk-2077-No-Vacancy-e1570482474134.jpg);
+    background-size: cover;
+    
+}
+
+button:hover{ 
+    opacity: 50%;
+    /* background-color: red; */
+    
+}

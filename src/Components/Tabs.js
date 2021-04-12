@@ -1,5 +1,4 @@
 import React, {Component} from 'react'; 
-import '../style/test.scss'; 
 import {MDCTabBar} from '@material/tab-bar'; 
 import { ContactsOutlined } from '@material-ui/icons';
 

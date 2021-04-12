@@ -18,19 +18,20 @@ class Profile extends React.Component{
     createInputForm(){
       return(
         <div>
-          <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label for="inputPassword6" class="col-form-label">Password</label>
-            </div>
-          <div class="col-auto">
-            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline"></input>
-          </div>
-          <div class="col-auto">
-            <span id="passwordHelpInline" class="form-text">
-              Must be 8-20 characters long.
-            </span>
-          </div>
-          </div>
+        <label for="inputPassword5" class="form-label" style = {{color: 'black'}}>New Password</label>
+            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock"></input>
+            
+
+          <label for="inputPassword5" class="form-label" style = {{color: 'black'}}>Confirm New Password</label>
+            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock"></input>
+            
+
+
+          <label for="inputPassword5" class="form-label" style = {{color: 'black'}} >Old Password</label>
+            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock"></input>
+          
+
+
         </div>
       
       );
@@ -41,7 +42,7 @@ class Profile extends React.Component{
     render(){ 
         return(
          <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">test</h5>
