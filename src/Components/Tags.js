@@ -29,14 +29,11 @@ class Tags extends React.Component{
           var i;
           var chipData = {}; 
           var chipId = {}
-          for(i =0; i<= chipSet.chips.length -1 ; i ++){
-             //check if chip is checekd
-             var isTrueSet = (chipSet.chips[i]["primaryAction_"]["ariaChecked"] == 'true'); //string to boolean
-            // chipData[chipSet.chips[i]["id"]] = isTrueSet;
-            // chipData[this.state.tagList[i]] = isTrueSet;
+          chipSet.chips.forEach((value, i) => {
+             var isTrueSet = (value["primaryAction_"]["ariaChecked"] == 'true'); //string to boolean
             chipData[i] = isTrueSet;
             chipId[chipSet.chips[i]["id"]] =  i
-          };
+          });
           this.setState({tagStatus:chipData}); 
 
 
@@ -104,16 +101,16 @@ class Tags extends React.Component{
     }
     
     createChipSet(chipList){
-        var jsx =[];
         if (chipList.length ==0) { //if ajax return null 
           return null;
         } 
         else // if data is received
-        { let i ; 
-          for(i = 0; i <= chipList.length -1; i++){
-            jsx.push(this.createChip(chipList[i], true)); 
-          }
-  
+        { 
+          
+          var jsx = chipList.map(chip => {
+            this.createChip(chip, true);
+          })
+
           // return jsx; 
           return(
             <div className="mdc-chip-set mdc-chip-set--filter" role="grid">

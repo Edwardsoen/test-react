@@ -116,7 +116,7 @@ class Result extends React.Component{
       var data = this.state.imagesData;
       var i;
       var JsXview = [];  
-      for(i=0; i <= data.length - 1; i++){//fix this
+      data.forEach((value, i)  => {//fix this
         let url = data[i]['url'];
         let icon = data[i]["icon"]
         console.log(url); 
@@ -125,7 +125,8 @@ class Result extends React.Component{
                       <a href = {url }><img src= {icon} height = "300" width = "300" style = {{objectFit:"cover"}}/></a>
                     </GridListTile>
         )
-      }
+      })
+
       return JsXview; 
     }catch(e){
         return null; 
