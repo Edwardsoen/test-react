@@ -15,13 +15,13 @@ class Tags extends React.Component{
             isInitialized:false, 
             tagStatus:{} //TAGID: ISCHECKED (BOOLEAN)
         }; 
-    }
+    };
 
 
 
     componentDidMount(){
         this.getTagsList(); 
-    }
+    };
     componentDidUpdate(){
       if(!this.state.isInitialized){
         try { 
@@ -53,8 +53,8 @@ class Tags extends React.Component{
 
       }catch(e) {
           console.log(e);
-      }
-      } 
+      };
+      };
     };
 
     
@@ -69,7 +69,7 @@ class Tags extends React.Component{
         fetch(url, { 
           credentials: 'include' //change this
         }).then(res => res.json()).then(data => JSON.parse(JSON.stringify(data))["tags"]).then(d => this.setState({tagList:d}));
-      }
+      };
       
 
     createChip = (title, isSelected) => {
@@ -96,9 +96,7 @@ class Tags extends React.Component{
           </div>
           </li>
         );
-
-
-    }
+    };
     
     createChipSet(chipList){
         if (chipList.length ==0) { //if ajax return null 
@@ -125,12 +123,9 @@ class Tags extends React.Component{
             <div>
                 {this.createChipSet(this.state.tagList)}
             </div>
-        
-
-        )
-    }
-    
-}
+        );
+    };
+};
 
 
 export default Tags; 

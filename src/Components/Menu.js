@@ -1,7 +1,4 @@
 import React, {Component} from 'react'; 
-import {MDCMenu} from '@material/menu';
-import Profile from './profile'
-import Modal from 'bootstrap/js/dist/modal'; 
 
 
 class Menu extends React.Component{
@@ -21,19 +18,19 @@ class Menu extends React.Component{
         fetch(link, {
           credentials: 'include'
         });  
-      }
+      };
 
 
 
 
 
     handleLogout(){
-        this.generateSession()
+        this.generateSession();
     }; 
 
     handleAccount(){
         this.props.isClicked(true); 
-    }
+    };
 
 
 

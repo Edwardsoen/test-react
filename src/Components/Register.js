@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+
 import React, {Component} from 'react'; 
 import {MDCDialog} from '@material/dialog';
 
@@ -43,13 +43,11 @@ class Register extends React.Component{
             },
             body: JSON.stringify(data)
         }, 
-
-        ).then(d => d.json()).then(data => this.setState({RegisterStatus:data["registered"]}))
-    
+        ).then(d => d.json()).then(data => this.setState({RegisterStatus:data["registered"]}));
     }
         else { 
             this.setState({passwordBorderColor:"red"})
-        }
+        };
     };
 
 
@@ -59,7 +57,7 @@ class Register extends React.Component{
         const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
         d.open();
         d.listen('MDCDialog:closed', function(event){
-          this.props.isClosed("closed")
+          this.props.isClosed("closed");
         }.bind(this)); 
     }; 
 
@@ -93,8 +91,8 @@ class Register extends React.Component{
         }
         else {
             return ""
-        }
-    }
+        };
+    };
     
     getUsernameErrorMsg(){
         if(this.state.RegisterStatus == "false"){
@@ -108,8 +106,8 @@ class Register extends React.Component{
         }
         else {
             return ""
-        }
-    }
+        };
+    };
 
     borderColor(){
         if(this.state.RegisterStatus == "false"){
@@ -117,8 +115,8 @@ class Register extends React.Component{
         }
         else {
             return ""
-        }
-    }
+        };
+    };
 
 
 
@@ -159,11 +157,7 @@ class Register extends React.Component{
 
 
         ); 
-
-
     }
-
-
-}
+};
 
 export default Register

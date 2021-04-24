@@ -1,38 +1,27 @@
 
-import { extend } from 'jquery';
 import React, {Component} from 'react'; 
 import '../style/style.css'
 
 
-
-
-
-//TESTING JS 
-// TODO: REFACTOR THISSSSSSSSSSSS 
-
-//To-test: 
-//-recursion
-//-functional
-//
 class Buttons extends React.Component{
     constructor(props){
         super(props)
         this.state = { 
             data : []
-        }
+        };
         this.props = props; 
-    }
+    };
 
     getButtonList(){
         const link = "http://localhost:8000/"; 
         const url = `${link}api/buttons`;
         const fetch = require('node-fetch'); 
         fetch(url).then(data => data.json()).then(d => this.setState({data: d["data"]})); 
-    }
+    };
 
     componentDidMount(){
         this.getButtonList();
-    }
+    };
 
 
 
@@ -44,7 +33,7 @@ class Buttons extends React.Component{
         }
         return data; 
         
-    }
+    };
 
 
 
@@ -58,8 +47,8 @@ class Buttons extends React.Component{
             </button>
             </form>
             </li>
-            )
-    }
+            );
+    };
 
 
 
@@ -81,10 +70,10 @@ class Buttons extends React.Component{
 
 
 
-        )
+        );
 
 
-    }
+    };
 
 
 

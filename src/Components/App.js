@@ -5,11 +5,7 @@ import Home from './Home';
 import Result from './Result';
 import Login from './Login';
 import Register from './Register';
-import {MDCDialog} from '@material/dialog';
-import { Button } from 'bootstrap';
 import Modal from 'bootstrap/js/dist/modal'; 
-import {MDCMenu} from '@material/menu';
-import { Menu } from '@material-ui/core';
 import Profile from './profile';
 
 
@@ -32,7 +28,7 @@ class App extends React.Component{
         this.handleRightButtonClick = this.handleRightButtonClick.bind(this); 
         this.parseResponse = this.parseResponse.bind(this); 
         this.handleAccountClick = this.handleAccountClick.bind(this); 
-    }
+    };
 
     
   renderResult(e){
@@ -45,13 +41,13 @@ class App extends React.Component{
   }; 
 
   componentDidMount(){
-    this.checkSession()
-    this.testing()
-  }
+    this.checkSession();
+    this.testing();
+  };
  
   testing = () => {
-      console.log("testing arrow function")
-  } 
+      console.log("testing arrow function");
+  };
 
 
 
@@ -78,12 +74,12 @@ class App extends React.Component{
     if("username" in data) { 
      this.setState({loginStatus: true});
      this.setState({username: data["username"]}) 
-    }
+    };
    
-  }
+  };
 
   handleUsername(e){
-    this.setState({username:e})
+    this.setState({username:e});
   }; 
 
 
@@ -94,35 +90,35 @@ class App extends React.Component{
                 loginStatus = {this.handleLoginStatus} 
                 username = {this.handleUsername} ></Login>,
         "profile":<Profile isClosed = {this.unMountComponent}></Profile>
-    }
+    };
     return(
         d[this.state.componentToBeRendered]
-    )
-    }
+    );
+    };
 
 
 
     handleLoginStatus = (e) => {
-        this.setState({loginStatus:e})
-        console.log(e)
-    }
+        this.setState({loginStatus:e});
+        console.log(e);
+    };
 
     unMountComponent = () => { 
-        this.setState({componentToBeRendered:""})
-    }
+        this.setState({componentToBeRendered:""});
+    };
 
     handleLeftButtonClick = () =>{
-        this.setState({componentToBeRendered: "login"})
-    }
+        this.setState({componentToBeRendered: "login"});
+    };
     handleAccountClick= () => {
-        let m = document.getElementById('staticBackdrop')
-        let myModal = new Modal(m, {})
+        let m = document.getElementById('staticBackdrop');
+        let myModal = new Modal(m, {});
         myModal.show(); 
-    }
+    };
 
     handleRightButtonClick = () =>{
-        this.setState({componentToBeRendered: "register"})
-    }
+        this.setState({componentToBeRendered: "register"});
+    };
 
 
 
@@ -143,9 +139,9 @@ class App extends React.Component{
             </div>
             
         );
-    }
+    };
 
-}
+};
 
 
 

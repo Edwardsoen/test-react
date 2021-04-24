@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 import {MDCDialog} from '@material/dialog';
-import { InvertColorsOffRounded } from '@material-ui/icons';
-import { red } from '@material-ui/core/colors';
 
 
 
@@ -28,7 +26,7 @@ class Login extends React.Component{
 
     handleCheckbox(e){ 
       var b = this.state.isChecked = !this.state.isChecked; 
-      this.setState({isChecked:b })
+      this.setState({isChecked:b });
     };
 
     handleUsernameChange(e){
@@ -45,14 +43,11 @@ class Login extends React.Component{
               <div id="passwordHelpBlock" class="form-text" style = {{color:"red"}}>
                       Wrong password or username
             </div>
-            )
+            );
       } else {
-        return ""
-      }
-
-      
-
-    }
+        return "";
+      };
+    };
     
     parseResponse(data){
       data = JSON.parse(JSON.stringify(data)); 
@@ -67,7 +62,7 @@ class Login extends React.Component{
         d.open();
         d.close();
       } else { 
-        this.setState({borderColor:"red"})
+        this.setState({borderColor:"red"});
       }
 
     }
@@ -97,14 +92,14 @@ class Login extends React.Component{
         const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
         d.open();
         d.listen('MDCDialog:closed', function(event){
-          this.props.isClosed("closed")
+          this.props.isClosed("closed");
         }.bind(this)); 
     };
 
 
     handleForgotPassword = () => {
-      alert("too badddd ")
-    }
+      alert("too badddd ");
+    };
 
 
     render(){

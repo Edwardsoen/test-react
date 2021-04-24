@@ -1,6 +1,5 @@
-import { ExtensionRounded, ThreeSixty, ThumbUpOutlined } from '@material-ui/icons';
+
 import React, {Component} from 'react'; 
-import Navbar from './navbar';
 import Result from './Result';
 
 
@@ -22,20 +21,20 @@ class Home extends React.Component{
           var url = 'ws://localhost:8000/api/socket';
           var webSocket = new WebSocket(url);
           webSocket.onopen = function(event){
-              webSocket.send("Sent")
-          }
+              webSocket.send("Sent");
+          };
           this.setState({webSocket: webSocket}); 
 
 
           webSocket.onmessage = function(event){
-              this.setState({websocket_data:event.data})
-          }.bind(this)
-    }
+              this.setState({websocket_data:event.data});
+          }.bind(this);
+    };
 
 
     sendDatatoSocket(){
-      this.state.webSocket.send("Send")
-    }
+      this.state.webSocket.send("Send");
+    };
 
 
   
@@ -81,8 +80,8 @@ class Home extends React.Component{
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-)
-    }
+);
+    };
     
 
     render(){

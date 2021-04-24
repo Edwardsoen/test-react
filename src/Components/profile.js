@@ -1,5 +1,4 @@
 import React, {Component} from 'react'; 
-import Modal from 'bootstrap/js/dist/modal'; 
 
 class Profile extends React.Component{
     constructor(props){
@@ -10,7 +9,7 @@ class Profile extends React.Component{
           ConfirmNewPassword : "", 
           isSuccesfullyChanged: ""
           
-        }
+        };
         this.props = props; 
         this.onOldPasswordChange = this.onOldPasswordChange.bind(this);  
         this.onConfirmPasswordChange  = this.onConfirmPasswordChange.bind(this); 
@@ -22,7 +21,7 @@ class Profile extends React.Component{
         // let m = document.getElementById('staticBackdrop')
         // let myModal = new Modal(m, {})
         // myModal.show(); 
-    }   
+    };
 
     createInputForm(){
       return(
@@ -46,34 +45,34 @@ class Profile extends React.Component{
     };
 
     onNewPasswordChange(e){
-      console.log("is Changed")
+      console.log("is Changed");
       this.setState({newPassword:e.target.value});
     }
 
     onConfirmPasswordChange(e){
-      console.log("is Changed")
+      console.log("is Changed");
       this.setState({ConfirmNewPassword:e.target.value});
     }
 
     onOldPasswordChange(e){
-      console.log("is Changed")
+      console.log("is Changed");
       this.setState({oldPassword:e.target.value});
     }
 
     ConfirmClick(){
       if(this.state.ConfirmNewPassword != this.state.newPassword){ 
-        alert("New passwords didn’t match. Try again.")
+        alert("New passwords didn’t match. Try again.");
       }else { 
-        this.changepassword()
-        console.log("Doneee")
+        this.changepassword();
+        console.log("Doneee");
         // if(this.state.isSuccesfullyChanged == "true") {
         //   alert("Success")
         // }else { 
         //   alert("Error")
         // }
-      }
+      };
 
-    }
+    };
 
 
     changepassword(){
@@ -97,9 +96,9 @@ class Profile extends React.Component{
        window.location.reload()}
       else { 
         alert("error");
-      }
+      };
       
-      })
+      });
     };
 
     
@@ -144,8 +143,6 @@ class Profile extends React.Component{
         )
     };
 
-
-
-}
+};
 
 export default Profile; 

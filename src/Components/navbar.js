@@ -1,14 +1,8 @@
 
 import React, {Component} from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './Login';
-import Register from './Register';
-import Result from './Result'
-import {MDCDialog} from '@material/dialog';
 import {MDCMenu} from '@material/menu'
-import Home from './Home';
 import Menu from './Menu';
-import { ThreeDRotation } from '@material-ui/icons';
 
 
 class Navbar extends React.Component{
@@ -23,22 +17,21 @@ class Navbar extends React.Component{
     this.handleRightButtonClick = this.handleRightButtonClick.bind(this); 
     this.handleleftButtonClick = this.handleleftButtonClick.bind(this); 
     this.handleAccountClick = this.handleAccountClick.bind(this); 
-  
-   }
+   };
 
   componentDidUpdate(){
     if (this.props.loginStatus != this.state.loginStatus){
       this.setState({loginStatus: this.props.loginStatus});
-    }
+    };
     if(this.props.username != this.state.username){
       this.setState({username: this.props.username});
-    }
-  }
+    };
+  };
 
 
   handleleftButtonClick(e){ // handle login button click
     this.props.leftButtonisClicked(true);
-  }
+  };
 
   handleRightButtonClick(e){// handle register click 
     if(this.state.loginStatus){
@@ -46,8 +39,8 @@ class Navbar extends React.Component{
         menu.open = true;
     }else { 
       this.props.rightButtonisClicked(true);
-    }
-  }
+    };
+  };
 
 
   checkLoggedIn(){//TODO: Convert to boolean //Paramter if Logged in
@@ -68,8 +61,8 @@ class Navbar extends React.Component{
 
 
   handleAccountClick(){
-    this.props.isClicked(true)
-  }
+    this.props.isClicked(true);
+  };
 
 
     render(){
@@ -100,7 +93,7 @@ class Navbar extends React.Component{
             </div>
         ); 
     }
-}
+};
 
 
 

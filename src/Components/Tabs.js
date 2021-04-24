@@ -1,6 +1,5 @@
 import React, {Component} from 'react'; 
 import {MDCTabBar} from '@material/tab-bar'; 
-import { ContactsOutlined } from '@material-ui/icons';
 
 
 class Tabs extends React.Component{
@@ -13,9 +12,9 @@ class Tabs extends React.Component{
             isLoaded:false, 
             selectedTab:0, 
             isInitialized: ""
-        }
+        };
         this.updateSitesList = this.updateSitesList.bind(this);
-    }
+    };
 
     getSitesList(){
         const link = "http://localhost:8000/";  
@@ -38,7 +37,7 @@ class Tabs extends React.Component{
                 this.setState({isInitialized:true});
                 }catch(e){
                     console.log(e)
-                }
+                };
             };
     };
 
@@ -53,7 +52,7 @@ class Tabs extends React.Component{
         }else {
             var s = "mdc-tab mdc-tab";
             var s2 = "mdc-tab-indicator mdc-tab-indicator"
-        }
+        };
         return (   
             <button className={s} key= {title} >
             <span className="mdc-tab__content" >
@@ -64,9 +63,8 @@ class Tabs extends React.Component{
             </span>
             <span className="mdc-tab__ripple"></span>
           </button>
-
         );
-    }
+    };
     componentDidMount(){
         this.getSitesList(); 
     };
@@ -92,9 +90,9 @@ class Tabs extends React.Component{
                 </div>
             </div>  
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 
 export default Tabs; 

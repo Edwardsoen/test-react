@@ -62,8 +62,6 @@ class Result extends React.Component{
         .then(d => this.setState({imagesData:this.state.imagesData.concat(d)}))
         .then(console.log("FETCH DONE"))
         .catch(error => {console.log(error)}); 
-      console.log("SYNCHROUBNSDJALKJDS")
-
     };
       
 
@@ -71,15 +69,12 @@ class Result extends React.Component{
     componentDidMount(){
       var searchItem = new URLSearchParams(window.location.search).get("q"); 
       if(searchItem == null){
-        this.setState({isOnHomePage:true})
-        // this.setState({searchItem:"landscape"})
+        this.setState({isOnHomePage:true});
         this.getImageData(this.state.searchItem, "", this.state.currentPage); 
       }else {
-        this.setState({searchItem:searchItem})
+        this.setState({searchItem:searchItem});
         this.getImageData(searchItem,"", this.state.currentPage);
-      }
-      
-       
+      };
     };
 
     componentDidUpdate(){
@@ -95,9 +90,9 @@ class Result extends React.Component{
      Object.keys(b).forEach(function(key){
        if(b[key]){
          a.push(key)
-       }
+       };
        
-     })
+     });
     }
     catch(err){
       console.log(err)
@@ -106,7 +101,7 @@ class Result extends React.Component{
     finally {
       return a.toString();
     }
-   }
+   };
 
 
 
@@ -114,7 +109,6 @@ class Result extends React.Component{
     createTabView(){
       try {
       var data = this.state.imagesData;
-      var i;
       var JsXview = [];  
       data.forEach((value, i)  => {//fix this
         let url = data[i]['url'];
@@ -130,8 +124,8 @@ class Result extends React.Component{
       return JsXview; 
     }catch(e){
         return null; 
-      }
-    }
+      };
+    };
     
     handleTabChange(e){
       this.controller.abort(); 
@@ -156,15 +150,15 @@ class Result extends React.Component{
       this.setState({currentPage:this.state.currentPage + 1});
       this.getImageData(this.state.searchItem,"", this.state.currentPage); 
       // this.setState({imagesData:this.state.imagesData.concat(this.state.imagesData)});
-      console.log("is scrolled")
-    }
+      console.log("is scrolled");
+    };
 
     handleTagChange(e){
 
       this.controller.abort(); 
       this.setState({currentPage:1}); 
       this.setState({imagesData:[]}); 
-      this.setState({tagStatus:e})
+      this.setState({tagStatus:e});
       this.getImageData(this.state.searchItem ,this.state.selectedTab ,this.state.currentPage);
     }
 
@@ -180,7 +174,7 @@ class Result extends React.Component{
         <Tabs isChanged = {this.handleTabChange} siteslist = {this.appendSitesList}></Tabs>   
         </div>
       );
-      }
+      };
     };
    
 
@@ -208,7 +202,7 @@ class Result extends React.Component{
         </div>
         )
     }
-}
+};
 
 
 export default Result; 
