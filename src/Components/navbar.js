@@ -1,12 +1,7 @@
 
 import React, {Component} from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './Login';
-import Register from './Register';
-import Result from './Result'
-import {MDCDialog} from '@material/dialog';
 import {MDCMenu} from '@material/menu'
-import Home from './Home';
 import Menu from './Menu';
 import { ThreeDRotation } from '@material-ui/icons';
 
@@ -22,42 +17,53 @@ class Navbar extends React.Component{
     this.props = props; 
     this.handleRightButtonClick = this.handleRightButtonClick.bind(this); 
     this.handleleftButtonClick = this.handleleftButtonClick.bind(this); 
-   }
+    this.handleAccountClick = this.handleAccountClick.bind(this); 
+   };
 
   componentDidUpdate(){
     if (this.props.loginStatus != this.state.loginStatus){
       this.setState({loginStatus: this.props.loginStatus});
-    }
+    };
     if(this.props.username != this.state.username){
       this.setState({username: this.props.username});
-    }
-  }
+    };
+  };
 
 
   handleleftButtonClick(e){ // handle login button click
     this.props.leftButtonisClicked(true);
-  }
+  };
 
   handleRightButtonClick(e){// handle register click 
-    this.props.rightButtonisClicked(true); 
-  }
+    if(this.state.loginStatus){
+      let menu = new MDCMenu(document.querySelector('.mdc-menu'));
+        menu.open = true;
+    }else { 
+      this.props.rightButtonisClicked(true);
+    };
+  };
 
 
   checkLoggedIn(){//TODO: Convert to boolean //Paramter if Logged in
     var s = {}
-    if(this.state.loginStatus == false){
+    if(this.state.loginStatus == false || this.state.loginStatus == "false" ){//FIX THIS 
       s["left"] = "Login"; 
       s["right"] = "Register";  
       s["button"] = "btn btn-outline-dark"; 
     }
     else { 
-      console.log(this.state.username)
+      
       s["left"] = this.state.username; 
       s["right"] = "Menu"; 
       s["button"] = "btn btn-outline-dark disabled"; 
     }
     return s;
   }
+
+
+  handleAccountClick(){
+    this.props.isClicked(true);
+  };
 
 
     render(){
@@ -79,18 +85,16 @@ class Navbar extends React.Component{
                 <a className={this.checkLoggedIn()["button"]} style={{color:'white',border:'none' }} onClick = {this.handleleftButtonClick} >{this.checkLoggedIn()["left"]}</a>
                 <a className="btn btn-outline-dark"  style={{color:'white',border:'none'}} onClick = {this.handleRightButtonClick}>{this.checkLoggedIn()["right"]}
                 <div class = "toolbar mdc-menu-surface--anchor">
+                  <Menu isClicked ={this.handleAccountClick}></Menu>
                 </div>
                 </a>
                 </div>
             </div>
           </nav>
-          {/* {this.renderResult()} */}
-          
-    
             </div>
         ); 
     }
-}
+};
 
 
 

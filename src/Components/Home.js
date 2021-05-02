@@ -1,6 +1,6 @@
-import { ExtensionRounded } from '@material-ui/icons';
+
+import { WbSunnySharp } from '@material-ui/icons';
 import React, {Component} from 'react'; 
-import Navbar from './navbar';
 import Result from './Result';
 
 
@@ -9,13 +9,39 @@ class Home extends React.Component{
         super(props)
         this.props = props; 
         this.state = {
+          websocket_data : "",
+          webSocket :""
+          // websocket: ""
         }
-        
+        this.sendDatatoSocket = this.sendDatatoSocket.bind(this); 
     }; 
+
+    componentDidMount(){ 
+
+    
+          var url = 'ws://localhost:8000/api/socket';
+          var webSocket = new WebSocket(url);
+          webSocket.onopen = function(event){
+              webSocket.send("Sent");
+          };
+          this.setState({webSocket: webSocket}); 
+          webSocket.onmessage = function(event){
+              this.setState({websocket_data:event.data});
+          }.bind(this);
+    };
+
+
+
+
+
+    sendDatatoSocket(){
+      this.state.webSocket.send("Send");
+    };
+
 
   
 
-    carousel(){
+    carousel = () => {
         return(  
         <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel"style = {{height:"600px", overflow: "visible"}} >
         <div class="carousel-indicators">
@@ -56,15 +82,16 @@ class Home extends React.Component{
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-)
-    }
+);
+    };
     
 
     render(){
         return(<div>
             {this.state.clickTimes}
             {this.carousel()}
-            <div  style  = {{height:"100px", width: "100%", textAlign: "center", textalign: "middle"}}><h2 style = {{paddingTop:"30px"}}> Sample Data</h2></div>
+            <div  style  = {{height:"100px", width: "100%", textAlign: "center", textalign: "middle"}}><h2 style = {{paddingTop:"30px"}} id = "websocket"> WebSocket Testing: {this.state.websocket_data} </h2></div>
+            <button id = "websocketbutton" onClick = {this.sendDatatoSocket} style = {{marginLeft:"42%", marginRight: "40%", backgroundColor: "grey"}}> CLICK ME TO UPDATE SERVER'S LCOAL TIME </button>
             <Result></Result>
        
 

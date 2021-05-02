@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {MDCDialog} from '@material/dialog';
-import { InvertColorsOffRounded } from '@material-ui/icons';
 
 
 
@@ -13,6 +12,7 @@ class Login extends React.Component{
         isChecked: false, 
         isLoggedIn: false, 
         isRegistered: "",
+        borderColor: ""
       }; 
       this.props = props; 
       this.handlePasswordChange = this.handlePasswordChange.bind(this); 
@@ -20,12 +20,13 @@ class Login extends React.Component{
       this.handleCheckbox = this.handleCheckbox.bind(this); 
       this.loginUser = this.loginUser.bind(this);
       this.parseResponse = this.parseResponse.bind(this); 
+      this.isWrongPassword = this.isWrongPassword.bind(this);
     }; 
 
 
     handleCheckbox(e){ 
       var b = this.state.isChecked = !this.state.isChecked; 
-      this.setState({isChecked:b })
+      this.setState({isChecked:b });
     };
 
     handleUsernameChange(e){
@@ -34,19 +35,34 @@ class Login extends React.Component{
     handlePasswordChange(e){
       this.setState({password: e.target.value}); 
     };  
+
+    isWrongPassword(){ 
+      
+      if (this.state.isLoggedIn == "false"){ //todo: convert str to bool  
+        return (
+              <div id="passwordHelpBlock" class="form-text" style = {{color:"red"}}>
+                      Wrong password or username
+            </div>
+            );
+      } else {
+        return "";
+      };
+    };
     
     parseResponse(data){
       data = JSON.parse(JSON.stringify(data)); 
       this.setState({isLoggedIn: data["isLoggedIn"]}); 
-      this.setState({isRegistered:data["isRegistered"]}); 
+      // this.setState({isRegistered:data["isRegistered"]}); 
       // this.props.loginStatus(this.state.isLoggedIn); 
       // this.props.username()
-      if(data["isLoggedIn"]){ //if loggeed in 
+      if(data["isLoggedIn"] == true){ //if loggeed in 
         this.props.loginStatus(this.state.isLoggedIn); 
         this.props.username(this.state.username);
         const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
         d.open();
         d.close();
+      } else { 
+        this.setState({borderColor:"red"});
       }
 
     }
@@ -63,6 +79,7 @@ class Login extends React.Component{
               'Content-Type': 'application/json',
               "Accept": "application/json"
           },
+          credentials: 'include', 
           // credentials: 'include', 
           body: JSON.stringify(data)
       }, 
@@ -75,21 +92,14 @@ class Login extends React.Component{
         const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
         d.open();
         d.listen('MDCDialog:closed', function(event){
-          this.props.isClosed("closed")
+          this.props.isClosed("closed");
         }.bind(this)); 
     };
 
-    handleLoggedIn(){
-      if(this.state.isLoggedIn){
-        const d = new MDCDialog(document.querySelector('.mdc-dialog')); 
-        d.open();
-        d.close()
-      }
-    }
 
-    handleForgotPassword(){
-      alert("too badddd ")
-    }
+    handleForgotPassword = () => {
+      alert("too badddd ");
+    };
 
 
     render(){
@@ -101,12 +111,14 @@ class Login extends React.Component{
                   <div>
             <form>
                 <div className= "mb-3">
-                    <label className= "form-label" htmlFor = "username">Username</label>
+                    <label className= "form-label" htmlFor = "username" style = {{borderColor:this.state.borderColor}}>Username</label>
                     <input id = "LoginUsername" className = "form-control" onChange = {this.handleUsernameChange}></input>
                 </div>
                 <div className = "mb-3">
                     <label className= "form-label" htmlFor = "password">Password</label>
-                    <input type = "password" id= "LoginPassword" className = "form-control" onChange = {this.handlePasswordChange}></input>
+                    <input type = "password" id= "LoginPassword" className = "form-control" onChange = {this.handlePasswordChange} style = {{borderColor:this.state.borderColor}}></input>
+                    {this.isWrongPassword()}
+                    
                     <input type = "checkbox" onClick = {this.handleCheckbox}></input> 
                     <label htmlFor = "rememberMe" style = {{margin:'3px'}}> Remember me </label>
                     <hr style = {{borderStyle: "none"}}></hr>

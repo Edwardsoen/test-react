@@ -1,7 +1,5 @@
 import React, {Component} from 'react'; 
-import '../style/test.scss'; 
 import {MDCTabBar} from '@material/tab-bar'; 
-import { ContactsOutlined } from '@material-ui/icons';
 
 
 class Tabs extends React.Component{
@@ -14,17 +12,16 @@ class Tabs extends React.Component{
             isLoaded:false, 
             selectedTab:0, 
             isInitialized: ""
-        }
+        };
         this.updateSitesList = this.updateSitesList.bind(this);
-    }
+    };
 
     getSitesList(){
-        // const link = "http://192.168.43.176:3000/"; 
         const link = "http://localhost:8000/";  
-        const url = `${link}api/sites`;
+        const url = `${link}api/tabs`;
         const fetch =require('node-fetch');
         fetch(url).then(res => res.json()).then(data=> 
-            JSON.parse(JSON.stringify(data))["sites"]).then(sites => this.setState({sitesList:sites})).then(this.updateSitesList); //JSON TO KEYS LIST
+            JSON.parse(JSON.stringify(data))["tabs"]).then(sites => this.setState({sitesList:sites})).then(this.updateSitesList); //JSON TO KEYS LIST
         };
 
     componentDidUpdate(){
@@ -40,14 +37,14 @@ class Tabs extends React.Component{
                 this.setState({isInitialized:true});
                 }catch(e){
                     console.log(e)
-                }
+                };
             };
     };
 
   
 
 
-    createTab(title, isActive){
+    createTab = (title, isActive) => {
         if (isActive)
         {
             var s = "mdc-tab mdc-tab--active";
@@ -55,7 +52,7 @@ class Tabs extends React.Component{
         }else {
             var s = "mdc-tab mdc-tab";
             var s2 = "mdc-tab-indicator mdc-tab-indicator"
-        }
+        };
         return (   
             <button className={s} key= {title} >
             <span className="mdc-tab__content" >
@@ -66,9 +63,8 @@ class Tabs extends React.Component{
             </span>
             <span className="mdc-tab__ripple"></span>
           </button>
-
         );
-    }
+    };
     componentDidMount(){
         this.getSitesList(); 
     };
@@ -94,9 +90,9 @@ class Tabs extends React.Component{
                 </div>
             </div>  
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 
 export default Tabs; 
