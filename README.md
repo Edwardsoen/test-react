@@ -3,4 +3,4 @@ images scrapped from [Artstation](https://www.artstation.com/) and [Devianart](h
 
 
 
-![alt text](https://media.giphy.com/media/6B6F3G9EgeGbeeSrhT/giphy.gif)
+![alt text](https://github.com/Edwardsoen/React/blob/master/Animated%20GIF-downsized_large.gif)
